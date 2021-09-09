@@ -41,9 +41,9 @@ func (l licenseApplication) aggregateResult(chanApp <-chan *models.Response) (ap
 	wg.Add(1)
 	go func() {
 		for {
-			sumVal, more := <-sumChan
+			sumVal, success := <-sumChan
 			sum += sumVal
-			if !more {
+			if !success {
 				wg.Done()
 				return
 			}

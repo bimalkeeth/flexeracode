@@ -1,6 +1,7 @@
 package fileaccess
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -14,13 +15,22 @@ func Test_FileOPen_Should_Return_Error_If_FileNotFound(t *testing.T) {
 	assert.Error(t, err)
 }
 
-func Test_analyze(t *testing.T) {
+func Test_FileOPen_Should_Return_Error_If_FileSuccess(t *testing.T) {
 
-	fileAccess := fileAccess{fileName: "fileName"}
+	fileAccess := fileAccess{fileName: "../sample-small-test.csv"}
 
 	t.Run("Ope File with exiting file", func(t *testing.T) {
-		if _, err := fileAccess.fileOpen(); (err != nil) != false {
-			t.Errorf("analyze() error = %v", err)
-		}
+		_, err := fileAccess.fileOpen()
+		assert.NoError(t, err)
 	})
+}
+
+func Test_When_Prepare_Should_return_Error_When_File_With_Error(t *testing.T) {
+
+	fileAccess := fileAccess{fileName: "../sample-small-test.csv"}
+	stringFile := []string{"839", "8809", "374", "laptop,Exported from System A", "839", "8809"}
+
+	_, err := fileAccess.prepare(stringFile, fmt.Errorf("error in file"))
+	assert.Error(t, err)
+
 }

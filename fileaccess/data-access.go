@@ -10,10 +10,10 @@ import (
 )
 
 //open file data store to read
-func (a *fileAccess) fileOpen(fileName string) (*os.File, error) {
-	applicationDataFile, err := os.OpenFile(fileName, os.O_RDONLY, os.ModePerm)
+func (a *fileAccess) fileOpen() (*os.File, error) {
+	applicationDataFile, err := os.OpenFile(a.fileName, os.O_RDONLY, os.ModePerm)
 	if err != nil {
-		log.Fatalf("unable to open file: %v", err)
+		log.Printf("unable to open file: %v", err)
 		return nil, err
 	}
 	return applicationDataFile, nil
@@ -35,7 +35,7 @@ func (a *fileAccess) prepare(line []string, errResponse error) (application *mod
 
 // read file function open file and initiate file sv file reader
 func (a *fileAccess) readFile() (err error) {
-	a.openedFile, err = a.fileOpen(a.fileName)
+	a.openedFile, err = a.fileOpen()
 	if err != nil {
 		return err
 	}
@@ -52,7 +52,10 @@ func (a *fileAccess) readLine() (line *models.UserApplication, err error) {
 // GetUsersCopiesByAppId get data from file data store by application id
 func (a *fileAccess) GetUsersCopiesByAppId(appId string) <-chan *models.Response {
 
-	defer a.openedFile.Close()
+	defer func(openedFile *os.File) {
+		_ = openedFile.Close()
+	}(a.openedFile)
+
 	brodCastChan := make(chan *models.Response)
 	err := a.readFile()
 	if err != nil {

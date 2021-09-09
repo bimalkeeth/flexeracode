@@ -1,6 +1,7 @@
 package licence
 
 import (
+	"fmt"
 	"strings"
 	"sync"
 	"time"
@@ -10,6 +11,10 @@ import (
 
 // CalculateLicense method to calculate license for the given application
 func (l licenseApplication) CalculateLicense(applicationId string) (numberOfCopies int, err error) {
+
+	if applicationId == "" {
+		return -1, fmt.Errorf("application id is not defined")
+	}
 
 	return l.aggregateResult(l.fileAccess.GetUsersCopiesByAppId(applicationId))
 }

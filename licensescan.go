@@ -1,16 +1,45 @@
 package main
 
 import (
+	"flag"
 	"fmt"
+	"log"
 
 	"flexeracode/config"
 )
 
 func main() {
 
-	configService := config.NewConfig("/Users/bimalkeeth/Downloads/Flexera_Code_Test-2/sample-small.csv")
+	fmt.Println(`___________.__                  .____    .__                                   
+\_   _____/|  |   ____ ___  ___ |    |   |__| ____  ____   ____   ______ ____  
+ |    __)  |  | _/ __ \\  \/  / |    |   |  |/ ___\/ __ \ /    \ /  ___// __ \ 
+ |     \   |  |_\  ___/ >    <  |    |___|  \  \__\  ___/|   |  \\___ \\  ___/ 
+ \___  /   |____/\___  >__/\_ \ |_______ \__|\___  >___  >___|  /____  >\___  >
+     \/              \/      \/         \/       \/    \/     \/     \/     \/ `)
+
+	filename := flag.String("file", "sample-large.csv", "filename")
+	applicationId := flag.String("app-id", "374", "application id")
+
+	flag.Parse()
+
+	if *filename == "" || *applicationId == "" {
+		flag.Usage()
+		return
+	}
+
+	configService := config.NewConfig(*filename)
+
 	license := configService.LicenseService()
-	_, err := license.CalculateLicense("374")
-	fmt.Print(err)
+	licenCount, err := license.CalculateLicense(*applicationId)
+
+	if err != nil {
+		log.Printf("error in clculating application licence %v", err)
+		return
+	}
+
+	colorYellow := "\033[33m"
+	log.Println(string(colorYellow))
+
+	log.Printf("Required licence this application Number %v is %v", applicationId, licenCount)
 
 }

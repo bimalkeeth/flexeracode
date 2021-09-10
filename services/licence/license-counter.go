@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strings"
 	"sync"
-	"time"
 
 	"flexeracode/fileaccess/models"
 )
@@ -47,7 +46,6 @@ func (l licenseApplication) aggregateResult(chanApp <-chan *models.Response) (ap
 				wg.Done()
 				return
 			}
-			time.Sleep(1000 * time.Nanosecond)
 		}
 	}()
 	wg.Wait()
@@ -59,12 +57,10 @@ func (l licenseApplication) counter(applications map[string][]*models.UserApplic
 	sum = make(chan int)
 	go func() {
 		for _, appItems := range applications {
-
 			desktopMap := make(map[string]bool)
 			laptopMap := make(map[string]bool)
 
 			for _, item := range appItems {
-
 				machineType := strings.ToUpper(item.ComputerType)
 				key := item.UserID + "-" + item.ComputerID
 				switch machineType {

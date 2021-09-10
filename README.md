@@ -33,3 +33,7 @@ Together with above library there dependency libraries loaded.
 #Usage instruction
 
 ./licensescan -file="sample-small-tesrt.csv" -appid="374"
+
+
+
+

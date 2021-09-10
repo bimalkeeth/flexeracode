@@ -57,6 +57,7 @@ func (l licenseApplication) counter(applications map[string][]*models.UserApplic
 	sum = make(chan int)
 	go func() {
 		for _, appItems := range applications {
+
 			desktopMap := make(map[string]bool)
 			laptopMap := make(map[string]bool)
 

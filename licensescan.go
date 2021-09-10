@@ -10,6 +10,8 @@ import (
 
 func main() {
 
+	fmt.Print("\033[H\033[2J")
+
 	fmt.Println(`___________.__                  .____    .__                                   
 \_   _____/|  |   ____ ___  ___ |    |   |__| ____  ____   ____   ______ ____  
  |    __)  |  | _/ __ \\  \/  / |    |   |  |/ ___\/ __ \ /    \ /  ___// __ \ 
@@ -17,7 +19,7 @@ func main() {
  \___  /   |____/\___  >__/\_ \ |_______ \__|\___  >___  >___|  /____  >\___  >
      \/              \/      \/         \/       \/    \/     \/     \/     \/ `)
 
-	filename := flag.String("file", "sample-large.csv", "filename")
+	filename := flag.String("file", "sample-small-test.csv", "filename")
 	applicationId := flag.String("app-id", "374", "application id")
 
 	flag.Parse()
@@ -30,7 +32,7 @@ func main() {
 	configService := config.NewConfig(*filename)
 
 	license := configService.LicenseService()
-	licenCount, err := license.CalculateLicense(*applicationId)
+	licenseCount, err := license.CalculateLicense(*applicationId)
 
 	if err != nil {
 		log.Printf("error in clculating application licence %v", err)
@@ -40,6 +42,6 @@ func main() {
 	colorYellow := "\033[33m"
 	log.Println(string(colorYellow))
 
-	log.Printf("Required licence this application Number %v is %v", applicationId, licenCount)
+	log.Printf("Required licence this application Number %v is %v", *applicationId, licenseCount)
 
 }

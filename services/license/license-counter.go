@@ -67,7 +67,7 @@ func (l licenseApplication) counter(applications map[string][]*models.UserApplic
 				machineType := strings.ToUpper(item.ComputerType)
 				key := fmt.Sprintf("%s-%s", item.UserID, item.ComputerID)
 				switch machineType {
-				case "DESKTOP":
+				case Desktop:
 					desktopMap[key] = true
 				default:
 					laptopMap[key] = true

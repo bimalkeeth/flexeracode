@@ -36,8 +36,10 @@ func (l licenseApplication) aggregateResult(chanApp <-chan *models.Response) (ap
 
 	//aggregating license count through channel
 	sumChan := l.counter(applicationByUser)
+
 	wg := sync.WaitGroup{}
 	wg.Add(1)
+
 	go func() {
 		for {
 			sumVal, success := <-sumChan

@@ -19,7 +19,7 @@ func main() {
      `)
 
 	filename := flag.String("file", "sample-small-test.csv", "filename")
-	applicationId := flag.String("app-id", "374", "application id")
+	applicationId := flag.String("appid", "374", "application id")
 
 	flag.Parse()
 

@@ -1,3 +1,7 @@
+
+
+
+
 #License Scanner
 
 This sample program will calculate required licence 
@@ -12,7 +16,9 @@ In this sample it is assumed that csv file contains following columns
    * ComputerType
    * Comments
 
-on processing, it is assumed that this column order is maintained within the csv file 
+on processing, it is assumed that this column order 
+is maintained within the csv file. 
+
 
 #External Libraries
 
@@ -22,3 +28,8 @@ This library used in test cases for asserting test case result
 with test packages in golang assert is not easy without using 
 external library.
 Together with above library there dependency libraries loaded.
+
+
+#Usage instruction
+
+./licensescan -file="sample-small-tesrt.csv" -appid="374"

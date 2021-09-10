@@ -1,4 +1,4 @@
-package licence
+package license
 
 import (
 	"flexeracode/fileaccess"

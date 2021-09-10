@@ -2,11 +2,11 @@ package config
 
 import (
 	"flexeracode/fileaccess"
-	"flexeracode/services/licence"
+	"flexeracode/services/license"
 )
 
 type IApplicationConfig interface {
-	LicenseService() licence.ILicenseApplication
+	LicenseService() license.ILicenseApplication
 	FileAccess() fileaccess.IFileAccess
 }
 
@@ -15,8 +15,8 @@ type appConfig struct {
 }
 
 // LicenseService getting instance of the license server
-func (a appConfig) LicenseService() licence.ILicenseApplication {
-	return licence.New(a.FileAccess())
+func (a appConfig) LicenseService() license.ILicenseApplication {
+	return license.New(a.FileAccess())
 }
 
 // FileAccess getting instance of file access service

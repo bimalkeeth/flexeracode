@@ -34,13 +34,13 @@ func main() {
 	licenseCount, err := license.CalculateLicense(*applicationId)
 
 	if err != nil {
-		log.Printf("error in clculating application licence %v", err)
+		log.Printf("error in clculating application license %v", err)
 		return
 	}
 
 	colorYellow := "\033[33m"
 	log.Println(string(colorYellow))
 
-	log.Printf("Required licence this application Number %v is %v", *applicationId, licenseCount)
+	log.Printf("Required license this application Number %v is %v", *applicationId, licenseCount)
 
 }

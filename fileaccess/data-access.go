@@ -57,16 +57,18 @@ func (a *fileAccess) fileCloser() {
 func (a *fileAccess) GetUsersCopiesByAppId(appId string) <-chan *models.Response {
 
 	brodCastChan := make(chan *models.Response)
-	err := a.readFile()
-	if err != nil {
-		a.fileCloser()
-		brodCastChan <- &models.Response{UserCopy: nil, ErrorMessage: err}
-		close(brodCastChan)
-	}
+
 	//sending read output to the caller through channel
 	go func(broadChan chan *models.Response) {
 
 		defer a.fileCloser()
+		err := a.readFile()
+
+		if err != nil {
+			brodCastChan <- &models.Response{UserCopy: nil, ErrorMessage: err}
+			close(brodCastChan)
+			return
+		}
 
 		line, err := a.readLine()
 		for err == nil {

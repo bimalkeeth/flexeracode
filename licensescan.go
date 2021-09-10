@@ -39,7 +39,7 @@ func main() {
 	}
 
 	colorYellow := "\033[33m"
-	log.Println(string(colorYellow))
+	log.Println(colorYellow)
 
 	log.Printf("Required license this application Number %v is %v", *applicationId, licenseCount)
 

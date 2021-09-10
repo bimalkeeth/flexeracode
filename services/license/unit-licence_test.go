@@ -72,10 +72,33 @@ func getUsersCopiesByAppIdForError(appId string) <-chan *models.Response {
 	return brodCastChan
 }
 
+func getUsersCopiesByAppId(appId string) <-chan *models.Response {
+
+	brodCastChan := make(chan *models.Response)
+	//sending read output to the caller through channel
+	go func(broadChan chan *models.Response) {
+		for _, items := range getLicenceData() {
+			for _, item := range items {
+				broadChan <- &models.Response{UserCopy: item, ErrorMessage: nil}
+			}
+		}
+		close(broadChan)
+
+	}(brodCastChan)
+	return brodCastChan
+}
+
 func Test_AggregateResult_When_Error_InResponse(t *testing.T) {
 	licenseApplication := &licenseApplication{}
 	_, err := licenseApplication.aggregateResult(getUsersCopiesByAppIdForError(""))
 	assert.Error(t, err)
+}
+
+func Test_AggregateResult_When_Correct_Response_LicenceList(t *testing.T) {
+	licenseApplication := &licenseApplication{}
+	val, err := licenseApplication.aggregateResult(getUsersCopiesByAppId(""))
+	assert.NoError(t, err)
+	assert.Equal(t, val, 5)
 }
 
 func Test_Counter_When_Success_InResponse(t *testing.T) {

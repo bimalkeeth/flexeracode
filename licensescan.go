@@ -43,6 +43,6 @@ ___________.__                  .____    .__
 	colorYellow := "\033[33m"
 	log.Println(colorYellow)
 
-	log.Printf("Required license this application Number %v is %v", *applicationId, licenseCount)
+	log.Printf("Required license for this application Number %v is %v", *applicationId, licenseCount)
 
 }

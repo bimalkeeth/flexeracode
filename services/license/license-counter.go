@@ -57,7 +57,7 @@ func (l licenseApplication) aggregateResult(chanApp <-chan *models.Response) (ap
 //count unique required license
 func (l licenseApplication) counter(applications map[string][]*models.UserApplication) (sum chan int) {
 	sum = make(chan int)
-	go func() {
+	go func(responseChn chan int) {
 		for _, appItems := range applications {
 
 			desktopMap := make(map[string]bool)
@@ -74,11 +74,11 @@ func (l licenseApplication) counter(applications map[string][]*models.UserApplic
 				}
 			}
 			if len(desktopMap) > len(laptopMap) {
-				sum <- len(desktopMap)
+				responseChn <- len(desktopMap)
 			}
-			sum <- len(laptopMap)
+			responseChn <- len(laptopMap)
 		}
-		close(sum)
-	}()
+		defer close(responseChn)
+	}(sum)
 	return sum
 }
